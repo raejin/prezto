@@ -47,7 +47,7 @@ alias sftp='noglob sftp'
 
 # Define general aliases.
 alias _='sudo'
-alias b='${(z)BROWSER}'
+alias bb='${(z)BROWSER}'
 alias cp="${aliases[cp]:-cp} -i"
 alias e='${(z)VISUAL:-${(z)EDITOR}}'
 alias ln="${aliases[ln]:-ln} -i"

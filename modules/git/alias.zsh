@@ -66,17 +66,19 @@ alias gCt='git checkout --theirs --'
 alias gCT='gCt $(gCl)'
 
 # Data (d)
-alias gd='git ls-files'
-alias gdc='git ls-files --cached'
-alias gdx='git ls-files --deleted'
-alias gdm='git ls-files --modified'
-alias gdu='git ls-files --other --exclude-standard'
-alias gdk='git ls-files --killed'
+# alias gd='git ls-files'
+# alias gdc='git ls-files --cached'
+# alias gdx='git ls-files --deleted'
+# alias gdm='git ls-files --modified'
+# alias gdu='git ls-files --other --exclude-standard'
+# alias gdk='git ls-files --killed'
 alias gdi='git status --porcelain --short --ignored | sed -n "s/^!! //p"'
+alias gst='git status'
 
 # Fetch (f)
 alias gf='git fetch'
 alias gfc='git clone'
+alias gl='git pull'
 alias gfm='git pull'
 alias gfr='git pull --rebase'
 
@@ -89,18 +91,18 @@ alias ggv='git grep --invert-match'
 alias ggw='git grep --word-regexp'
 
 # Index (i)
-alias gia='git add'
+alias ga='git add'
 alias giA='git add --patch'
 alias giu='git add --update'
-alias gid='git diff --no-ext-diff --cached'
-alias giD='git diff --no-ext-diff --cached --word-diff'
+alias gd='git diff --no-ext-diff --cached'
+alias gD='git diff --no-ext-diff --cached --word-diff'
 alias gir='git reset'
 alias giR='git reset --patch'
 alias gix='git rm -r --cached'
 alias giX='git rm -rf --cached'
 
 # Log (l)
-alias gl='git log --topo-order --pretty=format:"${_git_log_medium_format}"'
+alias gll='git log --topo-order --pretty=format:"${_git_log_medium_format}"'
 alias gls='git log --topo-order --stat --pretty=format:"${_git_log_medium_format}"'
 alias gld='git log --topo-order --stat --patch --full-diff --pretty=format:"${_git_log_medium_format}"'
 alias glo='git log --topo-order --pretty=format:"${_git_log_oneline_format}"'
