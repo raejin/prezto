@@ -31,6 +31,7 @@ alias g='git'
 
 # Branch (b)
 alias gb='git branch'
+alias gbr='git branch'
 alias gbc='git checkout -b'
 alias gbl='git branch -v'
 alias gbL='git branch -av'
@@ -48,6 +49,7 @@ alias gcm='git commit --message'
 alias gco='git checkout'
 alias gcO='git checkout --patch'
 alias gcf='git commit --amend --reuse-message HEAD'
+alias gam='git commit --amend --no-edit'
 alias gcF='git commit --verbose --amend'
 alias gcp='git cherry-pick --ff'
 alias gcP='git cherry-pick --no-commit'
@@ -55,6 +57,7 @@ alias gcr='git revert'
 alias gcR='git reset "HEAD^"'
 alias gcs='git show'
 alias gcl='git-commit-lost'
+alias ghead='git rev-parse HEAD|pbcopy'
 
 # Conflict (C)
 alias gCl='git status | sed -n "s/^.*both [a-z]*ed: *//p"'
@@ -77,6 +80,7 @@ alias gst='git status'
 
 # Fetch (f)
 alias gf='git fetch'
+alias gfa='git fetch --all'
 alias gfc='git clone'
 alias gl='git pull'
 alias gfm='git pull'
