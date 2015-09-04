@@ -73,3 +73,8 @@ export HISTFILE=~/.zshrc_eternal_history
 # http://superuser.com/questions/20900/bash-history-loss
 PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 ulimit -n 8192
+source ~/zsh-autosuggestions/autosuggestions.zsh
+zle-line-init() {
+    zle autosuggest-start
+}
+zle -N zle-line-init
