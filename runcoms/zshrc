@@ -11,3 +11,36 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# why would you type 'cd dir' if you could just type 'dir'?
+setopt AUTO_CD
+
+# 10 second wait if you do something that will delete everything.  I wish I'd had this before...
+setopt RM_STAR_WAIT
+
+[[ $TMUX = "" ]] && export TERM="xterm-256color"
+export EDITOR="subl -n -w"
+export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
+
+alias sc="npm run -s sanity-check --"
+#alias tmux="TERM=xterm-256color tmux -2"
+
+# for fixing color to the right of cursor issue regarding autosuggestion
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+alias gam="gc --amend"
+alias bi="bundle install"
+alias b="bundle exec"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+#alias vim="mvim -v"
+alias vim="nvim"
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+alias ash="airlab ssh"
+alias asc="airlab sync"
+alias abnb="~/repos/airbnb"
+alias gro="gr origin/master"
+#alias gpb="gp origin $(git rev-parse --abbrev-ref HEAD)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
