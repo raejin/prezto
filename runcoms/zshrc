@@ -33,14 +33,38 @@ alias bi="bundle install"
 alias b="bundle exec"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 #alias vim="mvim -v"
-alias vim="nvim"
+#alias vim="nvim"
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 alias ash="airlab ssh"
 alias asc="airlab sync"
 alias abnb="~/repos/airbnb"
 alias gro="gr origin/master"
+alias gfm="gf origin master"
+alias gupdate="gfm; g reset --hard origin/master"
 #alias gpb="gp origin $(git rev-parse --abbrev-ref HEAD)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+export PATH="$HOME/.rbenv/shims:$PATH"
+
+source ~/.airlab/shellhelper.sh
+#source ~/.bin/tmuxinator.zsh
+export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+	if [ $1 ]; then
+		 tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+#
+#fzf_log() {
+#  hash=$(git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |  fzf | awk '{print $1}')
+#  echo $hash | xclip
+#  git showtool $hash
+#}
+#

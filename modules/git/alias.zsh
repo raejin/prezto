@@ -79,7 +79,6 @@ alias gst='git status'
 alias gf='git fetch'
 alias gfc='git clone'
 alias gl='git pull'
-alias gfm='git pull'
 alias gfr='git pull --rebase'
 alias gfa='git fetch --all'
 
