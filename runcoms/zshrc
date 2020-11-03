@@ -12,47 +12,108 @@ fi
 
 # Customize to your needs...
 
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 # why would you type 'cd dir' if you could just type 'dir'?
 setopt AUTO_CD
 
 # 10 second wait if you do something that will delete everything.  I wish I'd had this before...
 setopt RM_STAR_WAIT
+setopt INTERACTIVE_COMMENTS
 
 [[ $TMUX = "" ]] && export TERM="xterm-256color"
 export EDITOR="subl -n -w"
-export NVM_DIR="$HOME/.nvm"
-  . "/usr/local/opt/nvm/nvm.sh"
 
+alias jclr="./node_modules/.bin/jest --clearCache"
 alias sc="npm run -s sanity-check --"
+alias kc="kubectl"
 #alias tmux="TERM=xterm-256color tmux -2"
 
 # for fixing color to the right of cursor issue regarding autosuggestion
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=8"
+export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
+alias rg="rg --color=always -p"
 alias gam="gc --amend"
+alias cat="bat"
 alias bi="bundle install"
 alias b="bundle exec"
+alias pine="pineapple"
+alias logw="idt entry new"
+alias vim="nvim"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="/Users/rae_liu/airlab/repos/pineapple/frontend/pineapple/bin:$PATH"
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="$HOME/yak/build:$PATH"
 #alias vim="mvim -v"
 #alias vim="nvim"
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 alias ash="airlab ssh"
 alias asc="airlab sync"
-alias abnb="~/repos/airbnb"
+alias abnb="~/airlab-shared/repos/airbnb"
 alias gro="gr origin/master"
 alias gfm="gf origin master"
 alias gupdate="gfm; g reset --hard origin/master"
-#alias gpb="gp origin $(git rev-parse --abbrev-ref HEAD)"
+alias cb="eval \"git symbolic-ref --short HEAD\""
+alias gitremote="eval \"git remote get-url origin | grep -oEi '\/(.+)\.git' | sed 's/\///' | sed 's/\.git//'\""
+#alias ccb="eval 'echo https://air/compare/\$(cb)' | xargs open -a 'Google Chrome'"
+#alias ccb="eval 'echo https://git.musta.ch/airbnb/\$(gitremote)/compare/\$(cb)' | xargs open -a 'Google Chrome'"
+alias ccb="eval 'echo https://git.musta.ch/airbnb/\$(gitremote)/compare/\$(cb)' | xargs open -a 'Safari'"
+alias sde="~/airlab-shared/repos"
+
+export LDFLAGS="-L/usr/local/opt/readline/lib"
+export CPPFLAGS="-I/usr/local/opt/readline/include"
+
+bindkey "^[f" emacs-forward-word
+#bindkey "^[f" vi-forward-blank-word
+bindkey "^[b" emacs-backward-word
+#bindkey "^[b" vi-backward-blank-word
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules,.cache}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_TMUX=1
 export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
-export PATH="$HOME/.rbenv/shims:$PATH"
+export GREP_OPTIONS='--color=auto'
+#export GREP_COLOR='1;38;5;232;48;5;11' # https://askubuntu.com/questions/1042234/modifying-the-color-of-grep
+export GREP_COLOR='1;38;5;232;48;5;229' # https://askubuntu.com/questions/1042234/modifying-the-color-of-grep
 
+
+### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+### Fix slowness of pastes
+
+source ~/.zprezto/modules/syntax-highlighting/external/zsh-syntax-highlighting.zsh
+
+if [[ -d "$HOME/.rbenv" ]] then
+    export PATH=$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
+fi
+
+#export DISABLE_MAGIC_FUNCTIONS=true
 source ~/.airlab/shellhelper.sh
 #source ~/.bin/tmuxinator.zsh
-export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+#export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
 
 tm() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
